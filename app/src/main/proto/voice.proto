@@ -1,0 +1,166 @@
+syntax = "proto2";
+
+message SendSms {
+    required string field1 = 1;
+    required string field2 = 2;
+    required string field3 = 3;
+    required string field4 = 4;
+    required string message = 5;
+    required string thread = 6;
+    repeated string start_thread = 7;
+    required string field8 = 8;
+    repeated int64 field9 = 9;
+}
+
+message SendSmsResponse {
+    optional string field1 = 1;
+    required string thread = 2;
+    optional string message_id = 3;
+    required int64 timestamp = 4;
+    repeated int32 field5 = 5;
+}
+
+enum Feature {
+    MESSAGES = 2;
+}
+
+enum View {
+    ALL_THREADS = 1;
+    TEXT_THREADS = 2;
+}
+
+enum MessageType {
+    UNKNOWN1 = 1;
+    UNKNOWN2 = 2;
+    UNKNOWN3 = 3;
+    UNKNOWN4 = 4;
+    UNKNOWN5 = 5;
+    UNKNOWN6 = 6;
+    UNKNOWN7 = 7;
+    UNKNOWN8 = 8;
+    UNKNOWN9 = 9;
+    SMS_IN = 10;
+    SMS_OUT = 11;
+}
+
+enum MessageStatus {
+    UNREAD = 0;
+    READ = 1;
+}
+
+enum MmsStatus {
+    AVAILABLE = 1;
+}
+
+enum FeedbackStatus {
+    NOT_APPLICABLE = 1;
+}
+
+enum CoarseType {
+    CALL_TYPE_SMS_IN = 5;
+    CALL_TYPE_SMS_OUT = 6;
+}
+
+enum TranscriptStatus {
+    RECEIVED = 1;
+}
+
+enum MediaType {
+    PHOTO = 3;
+}
+
+message List {
+    required Feature inbox = 1 [default = MESSAGES];
+    required int32 num_threads = 2 [default = 20];
+    required int32 num_messages = 3 [default = 15];
+    required string field4 = 4;
+    required string field5 = 5;
+    required Unknown1 field6 = 6;
+}
+
+message Unknown1 {
+    required string field1 = 1;
+    required bool field2 = 2 [default = true];
+    required bool field3 = 3 [default = true];
+}
+
+message ListResponse {
+    repeated Thread thread = 1;
+    optional int64 paginationToken = 2;
+    required string versionToken = 3;
+}
+
+message Thread {
+    required string id = 1;
+    required bool read = 2;
+    repeated Message messages = 3;
+    optional string field4 = 4;
+    repeated Contact field5 = 5;
+    repeated View view = 6;
+    optional string field7 = 7;
+    required bool isText = 8;
+    repeated string headingContactsPhoneNumberKey = 9;
+    optional string field10 = 10;
+    optional string field11 = 11;
+    repeated string smsSuspectedSpamParticipants = 12;
+}
+
+message Message {
+    required string id = 1;
+    required int64 startTime = 2;
+    required string did = 3;
+    required Contact contact = 4;
+    required MessageType type = 5;
+    required MessageStatus status = 6;
+    optional string field7 = 7;
+    optional string field8 = 8;
+    optional string field9 = 9;
+    required string messageText = 10;
+    optional string field11 = 11;
+    optional string field12 = 12;
+    required CoarseType coarseType = 13;
+    required TranscriptStatus transcriptStatus = 14;
+    optional MmsMessage mmsMessage = 15;
+    required string phoneNumberKeyToThreadContact = 16;
+    required bool isArtificialErrorMessage = 17;
+    optional string field18 = 18;
+    required UserFeedback userFeedback = 19;
+}
+
+message MmsMessage {
+    required string text = 1;
+    required string subject = 2;
+    repeated Attachment attachment = 3;
+    repeated Contact participant = 4;
+    optional string senderPhoneNumber = 5;
+    repeated string phoneNumberKeyToThreadContact = 6;
+}
+
+message Attachment {
+    required string mimeType = 1;
+    required string id = 2;
+    required MmsStatus status = 3;
+    repeated ImageMetaData imageMetaData = 4;
+    required MediaType mediaType = 5;
+}
+
+message ImageMetaData {
+    required string sizeSpec = 1;
+    required int32 width = 2;
+    required int32 height = 3;
+}
+
+message Contact {
+    required string name = 1;
+    required string phoneNumber = 2;
+    optional string field3 = 3;
+    optional string field4 = 4;
+    optional string field5 = 5;
+    optional string field6 = 6;
+    optional bool blocked = 7;
+}
+
+message UserFeedback {
+    optional string field1 = 1;
+    required FeedbackStatus feedbackStatus = 2;
+}
